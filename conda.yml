@@ -5,3 +5,7 @@ channels:
 dependencies:
   - python=3.9
   - pandas
+  - scikit-learn
+  - sphinx
+  - mlflow
+prefix: D:\conda\envs\penv
