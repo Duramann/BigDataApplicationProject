@@ -1,4 +1,4 @@
-BigDataApplicationProject
+Application of Big Data Project - NOUAR Alexandre & DURA Théo 
 ==============================
 
 This is the project for the course named "Application of big data"
@@ -34,10 +34,7 @@ Project Organization
     ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
     ├── src                <- Source code for use in this project.
     │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
+    │   │   
     │   ├── features       <- Scripts to turn raw data into features for modeling
     │   │   └── build_features.py
     │   │
