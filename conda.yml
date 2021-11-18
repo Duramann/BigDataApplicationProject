@@ -9,4 +9,6 @@ dependencies:
   - sphinx
   - mlflow
   - matplotlib
+  - xgboost
+  - shap
 prefix: D:\conda\envs\penv
