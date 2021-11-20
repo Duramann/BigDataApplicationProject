@@ -4,10 +4,10 @@ import pandas as pd
 import numpy as np
 
 try:
-    test_df = pd.read_csv('../../data/raw/raw_test_data.csv')
-    train_df = pd.read_csv('../../data/raw/raw_train_data.csv')
+    test_df = pd.read_csv('data/raw/raw_test_data.csv')
+    train_df = pd.read_csv('data/raw/raw_train_data.csv')
 except (FileNotFoundError, IOError):
-            print("Unable to fetch data, please run this script from BigDataApplicationProject/src/features folder.")
+            print("Unable to fetch data, please run this script from BigDataApplicationProject folder.")
             sys.exit()
 
 def missing_values_columns(df):
@@ -53,8 +53,8 @@ for col in quantitative_c:
     train_df[col] = train_df[col].fillna(train_df[col].median())
     test_df[col] = test_df[col].fillna(test_df[col].median())
 
-train_df.to_csv('../../data/interim/cleaned_train_data.csv')
-test_df.to_csv('../../data/interim/cleaned_test_data.csv')
+train_df.to_csv('data/interim/cleaned_train_data.csv', index=False)
+test_df.to_csv('data/interim/cleaned_test_data.csv', index=False)
 
 train_df = pd.get_dummies(train_df)
 test_df = pd.get_dummies(test_df)
@@ -65,5 +65,5 @@ train_df, test_df = train_df.align(test_df, join = 'inner', axis = 1)
 
 train_df['TARGET'] = target
 
-train_df.to_csv('../../data/processed/train_data.csv')
-test_df.to_csv('../../data/processed/test_data.csv')
+train_df.to_csv('data/processed/train_data.csv', index=False)
+test_df.to_csv('data/processed/test_data.csv', index=False)
