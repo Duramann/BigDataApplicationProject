@@ -5,43 +5,31 @@ This is the project for the course named "Application of big data"
 
 Project Organization
 ------------
-
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
+    ├── README.md     
     ├── data               <- (This folder isn't commited on git)
-    │   ├── external       <- Data from third party sources.
     │   ├── interim        <- Intermediate data that has been transformed.
     │   ├── processed      <- The final, canonical data sets for modeling.
     │   └── raw            <- The original, immutable data dump.
     │
     ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
     │
-    ├── models             <- (This folder isn't commited on git) Contains models.sav from sklearn.pickle.
+    ├── models             <- (This folder isn't commited on git) Contains saved model as .pkl
     │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
+    ├── notebooks          <- Jupyter notebooks.
     │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
+    ├── conda.yml          <- The conda environnement properties                      
     │
     ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │   
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   └── models         <- Scripts to train models and then use trained models to make
-    │       │                 predictions
-    │       ├── predict_model.py
-    │       └── train_model.py
-    │   
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
-
-
+    └── src                <- Source code for use in this project.
+        ├── __init__.py    <- Makes src a Python module
+        │   
+        ├── features       <- Scripts to turn raw data into features for modeling
+        │   └── build_features.py
+        │
+        └── models         <- Scripts to train models and then use trained models to make
+            │                 predictions
+            ├── predict_model.py
+            └── train_model.py
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>

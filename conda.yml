@@ -12,4 +12,4 @@ dependencies:
   - xgboost
   - shap
   - seaborn
-prefix: D:\conda\envs\penv
+
