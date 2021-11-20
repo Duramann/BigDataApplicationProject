@@ -15,7 +15,9 @@ Project Organization
     │
     ├── models             <- (This folder isn't commited on git) Contains saved model as .pkl
     │
-    ├── notebooks          <- Jupyter notebooks.
+    ├── notebooks          <- Jupyter notebooks
+    │
+    ├── predictions        <- Contains the predictions of the three models as csv files   
     │
     ├── conda.yml          <- The conda environnement properties                      
     │

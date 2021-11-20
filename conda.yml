@@ -12,4 +12,5 @@ dependencies:
   - xgboost
   - shap
   - seaborn
+  - numpy==1.20
 

@@ -18,11 +18,16 @@ try:
 except (FileNotFoundError, IOError):
             print("Unable to fetch data, please run this script from BigDataApplicationProject folder.")
             sys.exit();
+            
 x_test = df_test
 
 ## Load gbc and rfc model
-gbc = pickle.load(open('models/GBC_model.pkl', 'rb'))
-rfc = pickle.load(open('models/RFC_model.pkl', 'rb'))
+try:
+    gbc = pickle.load(open('models/GBC_model.pkl', 'rb'))
+    rfc = pickle.load(open('models/RFC_model.pkl', 'rb'))
+except (FileNotFoundError, IOError):
+            print("Unable to fetch data, please train your models first by running src/models/train_model.py first.")
+            sys.exit();
 
 ## Load xgb model by choosing the best one from the mlflow experiments :
 experiment_name = "XGBOOST"
@@ -33,6 +38,11 @@ df = mlflow.search_runs([experiment_id], order_by=["metrics.precision DESC"])
 best_run_id = df.loc[0,'run_id']
 
 xgb = pickle.load(open('mlruns/1/'+best_run_id+'/artifacts/XGB_model/model.pkl', 'rb'))
+
+## Save best model in models folder
+
+filenameXGB = 'models/best_XGB_model.pkl'
+pickle.dump(xgb, open(filenameXGB, 'wb')) 
 
 ## Do the predictions :
 
