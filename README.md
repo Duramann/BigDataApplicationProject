@@ -6,16 +6,16 @@ This is the project for the course named "Application of big data"
 Project Organization
 ------------
     ├── README.md     
-    ├── data               <- (This folder isn't commited on git)
+    ├── data              
     │   ├── interim        <- Intermediate data that has been transformed.
     │   ├── processed      <- The final, canonical data sets for modeling.
     │   └── raw            <- The original, immutable data dump.
     │
     ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
     │
-    ├── models             <- (This folder isn't on git) Contains saved model as .pkl
+    ├── models             <- Contains saved model as .pkl
     │
-    ├── mlruns             <- (This folder isn't on git) Contains mlflow runs (Our experiment and runs are on the "1" folder) 
+    ├── mlruns             <- Contains mlflow runs (Our experiment and runs are on the "1" folder) 
     │
     ├── notebooks          <- Jupyter notebooks
     │
