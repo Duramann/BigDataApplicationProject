@@ -13,7 +13,9 @@ Project Organization
     │
     ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
     │
-    ├── models             <- (This folder isn't commited on git) Contains saved model as .pkl
+    ├── models             <- (This folder isn't on git) Contains saved model as .pkl
+    │
+    ├── mlruns             <- (This folder isn't on git) Contains mlflow runs (Our experiment and runs are on the "1" folder) 
     │
     ├── notebooks          <- Jupyter notebooks
     │

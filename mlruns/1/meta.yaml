@@ -1,0 +1,4 @@
+artifact_location: file:///D:/Logiciel_%C3%A9cole/Jupyter/BigDataApplicationProject/mlruns/1
+experiment_id: '1'
+lifecycle_stage: active
+name: XGBOOST
