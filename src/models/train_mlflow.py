@@ -24,7 +24,11 @@ def main():
     subsample = float(sys.argv[3]) if len(sys.argv) > 3 else 1.0
 
     # prepare train and test data
-    df_train = pd.read_csv('../../data/processed/train_data.csv')
+    try:
+        df_train = pd.read_csv('data/processed/train_data.csv')
+    except (FileNotFoundError, IOError):
+            print("Unable to fetch data, please run this script from BigDataApplicationProject folder.")
+            sys.exit()
     
     X = df_train.drop(columns = ['TARGET', 'Unnamed: 0'])
     Y = df_train['TARGET']
@@ -59,8 +63,6 @@ def main():
         mlflow.log_param("subsample", subsample)
         
         mlflow.xgboost.log_model(XGB, "XGB_model")
-
-
 
 if __name__ == "__main__":
     main()

@@ -1,10 +1,17 @@
+import sys
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import numpy as np
 import pickle
 
-df_train = pd.read_csv('../../data/processed/train_data.csv')
-df_test = pd.read_csv('../../data/processed/test_data.csv')
+try:
+    df_train = pd.read_csv('../../data/processed/train_data.csv')
+    df_test = pd.read_csv('../../data/processed/test_data.csv')
+except (FileNotFoundError, IOError):
+            print("Unable to fetch data, please run this script from BigDataApplicationProject/src/models folder.")
+            sys.exit()
+    
 
 X = df_train.drop(columns = ['TARGET', 'Unnamed: 0'])
 Y = df_train['TARGET']

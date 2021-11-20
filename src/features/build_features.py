@@ -1,8 +1,14 @@
+import sys
+
 import pandas as pd
 import numpy as np
 
-test_df = pd.read_csv('../../data/raw/raw_test_data.csv')
-train_df = pd.read_csv('../../data/raw/raw_train_data.csv')
+try:
+    test_df = pd.read_csv('../../data/raw/raw_test_data.csv')
+    train_df = pd.read_csv('../../data/raw/raw_train_data.csv')
+except (FileNotFoundError, IOError):
+            print("Unable to fetch data, please run this script from BigDataApplicationProject/src/features folder.")
+            sys.exit()
 
 def missing_values_columns(df):
         # count the total number of missing value in the dataframe
