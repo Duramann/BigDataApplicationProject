@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Predictions using our models &mdash; BigDataApplicationProject 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Model explaination using SHAP" href="shap.html" />
+    <link rel="prev" title="XGBoost Model Training with MLFLOW" href="mlflow-xgb.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> BigDataApplicationProject
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dataset-informations.html">Dataset informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="organization.html">Project organization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-exploration.html">Data exploration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-processing.html">Data processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models building and training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mlflow-xgb.html">XGBoost Model Training with MLFLOW</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Predictions using our models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shap.html">Model explaination using SHAP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Commands</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BigDataApplicationProject</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Predictions using our models</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/model-predict.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="predictions-using-our-models">
+<h1>Predictions using our models<a class="headerlink" href="#predictions-using-our-models" title="Permalink to this headline"></a></h1>
+<p>After training our base models and using MLFlow to find the best possible XGBoost model, we can then try to do predictions using our processed test dataset.</p>
+<p>The script used to perform this task can be found at :</p>
+<p><strong>src/models/predict_model.py</strong></p>
+<p>For the base Random Forest and Grandient Boosting models, we just have to load our saved .pkl models using pickle.</p>
+<p>However for the XGBoost model, since we have trained many models with MLFlow, we’ll find the model that have the best precision using this code :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">experiment_name</span> <span class="o">=</span> <span class="s2">&quot;XGBOOST&quot;</span>
+<span class="n">current_experiment</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">mlflow</span><span class="o">.</span><span class="n">get_experiment_by_name</span><span class="p">(</span><span class="n">experiment_name</span><span class="p">))</span>
+<span class="n">experiment_id</span><span class="o">=</span><span class="n">current_experiment</span><span class="p">[</span><span class="s1">&#39;experiment_id&#39;</span><span class="p">]</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">search_runs</span><span class="p">([</span><span class="n">experiment_id</span><span class="p">],</span> <span class="n">order_by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;metrics.precision DESC&quot;</span><span class="p">])</span>
+<span class="n">best_run_id</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;run_id&#39;</span><span class="p">]</span>
+
+<span class="n">xgb</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;mlruns/1/&#39;</span><span class="o">+</span><span class="n">best_run_id</span><span class="o">+</span><span class="s1">&#39;/artifacts/XGB_model/model.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>We retrieve all the model with the experiment name “XGBOOST”, fetch the experiment id then order all the experiments by precision descending and get its id.</p>
+<p>We then fetch the folder containing this model and import the .pkl file.</p>
+<p><em>At this point we also store this specific model in the</em> <strong>/models</strong> <em>folder</em></p>
+<p>After that we can use the <em>.predict()</em> function from sklearn to do prediction using our test dataset.</p>
+<p>When the predictions are done we store the results in .csv files located in <strong>/predictions</strong></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mlflow-xgb.html" class="btn btn-neutral float-left" title="XGBoost Model Training with MLFLOW" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="shap.html" class="btn btn-neutral float-right" title="Model explaination using SHAP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commands &mdash; BigDataApplicationProject 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Model explaination using SHAP" href="shap.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> BigDataApplicationProject
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dataset-informations.html">Dataset informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="organization.html">Project organization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-exploration.html">Data exploration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-processing.html">Data processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models building and training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mlflow-xgb.html">XGBoost Model Training with MLFLOW</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-predict.html">Predictions using our models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shap.html">Model explaination using SHAP</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#process-the-data">Process the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#models">Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-model-training">Basic model training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#training-with-mlflow">Training with MLFlow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mlflow-ui">MLFlow ui</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#model-predictions">Model predictions</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BigDataApplicationProject</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Commands</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/commands.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="commands">
+<h1>Commands<a class="headerlink" href="#commands" title="Permalink to this headline"></a></h1>
+<p>In this page we’ll explain how to run the different script of our project.</p>
+<section id="process-the-data">
+<span id="data-process"></span><h2>Process the data<a class="headerlink" href="#process-the-data" title="Permalink to this headline"></a></h2>
+<p>To process the data go into the <strong>/BigDataApplicationProject</strong> folder and run :</p>
+<p><em>python src/features/build_features.py</em></p>
+</section>
+<section id="models">
+<span id="models-execution"></span><h2>Models<a class="headerlink" href="#models" title="Permalink to this headline"></a></h2>
+<section id="basic-model-training">
+<h3>Basic model training<a class="headerlink" href="#basic-model-training" title="Permalink to this headline"></a></h3>
+<p>To train the basic models go into the <strong>/BigDataApplicationProject</strong> folder and run :</p>
+<p><em>python src/models/train_model.py</em></p>
+</section>
+<section id="training-with-mlflow">
+<h3>Training with MLFlow<a class="headerlink" href="#training-with-mlflow" title="Permalink to this headline"></a></h3>
+<p>To train the XGBoost model go into the <strong>/BigDataApplicationProject</strong> folder and run :</p>
+<p><em>python src/models/train_mlflow.py</em> <em>eta value</em> <em>colsample value</em> <em>subsample value</em></p>
+</section>
+</section>
+<section id="mlflow-ui">
+<h2>MLFlow ui<a class="headerlink" href="#mlflow-ui" title="Permalink to this headline"></a></h2>
+<p>To acces the MLFlow ui, go into the <strong>/BigDataApplicationProject</strong> folder and run :</p>
+<p><em>mlflow ui</em></p>
+<p>Then copy and paste the local url into a web browser to acces the ui.</p>
+</section>
+<section id="model-predictions">
+<h2>Model predictions<a class="headerlink" href="#model-predictions" title="Permalink to this headline"></a></h2>
+<p>To predict values using our models go into the <strong>/BigDataApplicationProject</strong> folder and run :</p>
+<p><em>python src/models/predict_model.py</em></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="shap.html" class="btn btn-neutral float-left" title="Model explaination using SHAP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
