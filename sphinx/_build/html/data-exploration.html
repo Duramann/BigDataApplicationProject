@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data exploration &mdash; BigDataApplicationProject 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Data processing" href="data-processing.html" />
+    <link rel="prev" title="Project organization" href="organization.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> BigDataApplicationProject
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dataset-informations.html">Dataset informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="organization.html">Project organization</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data exploration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#target-feature-analysis">Target feature analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#missing-values-overview">Missing values overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unique-values-overview">Unique values overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#correlations">Correlations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data-processing.html">Data processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models building and training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mlflow-xgb.html">XGBoost Model Training with MLFLOW</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-predict.html">Predictions using our models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shap.html">Model explaination using SHAP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Commands</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BigDataApplicationProject</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Data exploration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/data-exploration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-exploration">
+<h1>Data exploration<a class="headerlink" href="#data-exploration" title="Permalink to this headline"></a></h1>
+<p>The data exploration was done in a notebook found at <strong>notebooks/1.0-TD-data-exploration.ipynb</strong></p>
+<p>After loading the dataset and doing a quick overview of what is in it, we decided to first take a look at the Target feature.</p>
+<section id="target-feature-analysis">
+<h2>Target feature analysis<a class="headerlink" href="#target-feature-analysis" title="Permalink to this headline"></a></h2>
+<figure class="align-center">
+<img alt="_images/target.png" src="_images/target.png" />
+</figure>
+<p>We can see that they are a lot more negative target (value of 0, which mean that the applicant haven’t been able to repay the loan) than positive target (value of 1, the opposite)</p>
+<p>After that we decided to prepare the data processing by looking at the missing values :</p>
+</section>
+<section id="missing-values-overview">
+<h2>Missing values overview<a class="headerlink" href="#missing-values-overview" title="Permalink to this headline"></a></h2>
+<p>To see the values that were missing, we created a small python program that would count the missing values for each columns and displays them as a percentage in a pandas dataframe</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">missing_values_table</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+
+    <span class="n">missing</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="n">percent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+    <span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">missing</span><span class="p">,</span> <span class="n">percent</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">table_rename</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;Number of missing values&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">% o</span><span class="s1">f Total Values&#39;</span><span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">table_rename</span><span class="p">[</span><span class="n">table_rename</span><span class="p">[</span><span class="s1">&#39;Number of missing values&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Here is what we got in decreasing order for the training set and the testing set :</p>
+<a class="reference internal image-reference" href="_images/train_miss.png"><img alt="_images/train_miss.png" src="_images/train_miss.png" style="width: 49%;" /></a>
+<a class="reference internal image-reference" href="_images/test_miss.png"><img alt="_images/test_miss.png" src="_images/test_miss.png" style="width: 49%;" /></a>
+</section>
+<section id="unique-values-overview">
+<h2>Unique values overview<a class="headerlink" href="#unique-values-overview" title="Permalink to this headline"></a></h2>
+<p>To prepare feature engineering, we needed some insight on the unique values for each columns so we created this python code.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">unique_df</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+
+    <span class="n">number_unique</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+
+        <span class="n">number_unique</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
+
+
+    <span class="n">df_unique</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">number_unique</span><span class="p">,</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span> <span class="k">for</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">]),</span>
+                            <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Column name&quot;</span><span class="p">,</span> <span class="s2">&quot;Nbr of Unique Values&quot;</span><span class="p">,</span> <span class="s2">&quot;Data Type&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">df_unique</span>
+</pre></div>
+</div>
+<p>This code count the unique values and data type for each column, we will be using it to aim our feature engineering.</p>
+</section>
+<section id="correlations">
+<h2>Correlations<a class="headerlink" href="#correlations" title="Permalink to this headline"></a></h2>
+<p>We also tried to see the columns that were strongly correlated with the target feature with pandas’ .corr() function.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="organization.html" class="btn btn-neutral float-left" title="Project organization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="data-processing.html" class="btn btn-neutral float-right" title="Data processing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

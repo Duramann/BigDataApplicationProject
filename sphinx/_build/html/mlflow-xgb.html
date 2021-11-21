@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XGBoost Model Training with MLFLOW &mdash; BigDataApplicationProject 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Predictions using our models" href="model-predict.html" />
+    <link rel="prev" title="Models building and training" href="models.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> BigDataApplicationProject
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dataset-informations.html">Dataset informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="organization.html">Project organization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-exploration.html">Data exploration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-processing.html">Data processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models building and training</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">XGBoost Model Training with MLFLOW</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#code">Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#model-arguments">Model arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-metrics">Model metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-storing">Model storing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mlflow-ui">MLFlow UI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model-predict.html">Predictions using our models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shap.html">Model explaination using SHAP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Commands</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BigDataApplicationProject</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>XGBoost Model Training with MLFLOW</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mlflow-xgb.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="xgboost-model-training-with-mlflow">
+<span id="mlflow-xgboost"></span><h1>XGBoost Model Training with MLFLOW<a class="headerlink" href="#xgboost-model-training-with-mlflow" title="Permalink to this headline"></a></h1>
+<p>In order to train the best XGBoost model we could, we then used MLFlow to design our own machine learning lifecycle.</p>
+<p>After adding MLFlow to our conda environnement, we wrote a python script that would allow us to train a XGBoost model and to tune several parameters in order to have the best model we could while keeping tracks of the results of the model. (<em>we were actually looking for the best possible precision for our model</em>)</p>
+<p>The python script can be found at :</p>
+<p><strong>/src/models/train_mlflow.py</strong></p>
+<p>As usual we started by loading the processed dataset and splitting it into training and testing set.</p>
+<section id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline"></a></h2>
+<p>Here is the actual part of code that allow us to use MLFlow to do experiments with several runs :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="s2">&quot;XGBOOST&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">():</span>
+
+    <span class="n">XGB</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="n">objective</span><span class="o">=</span><span class="s1">&#39;binary:logistic&#39;</span><span class="p">,</span> <span class="n">eval_metric</span><span class="o">=</span><span class="s2">&quot;logloss&quot;</span><span class="p">,</span> <span class="n">use_label_encoder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span> <span class="n">subsample</span><span class="o">=</span><span class="n">subsample</span>
+                       <span class="p">,</span> <span class="n">colsample_bytree</span><span class="o">=</span><span class="n">colsample</span><span class="p">)</span>
+    <span class="n">XGB</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">XGB</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">prec</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+    <span class="n">hm</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span><span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;hm.png&#39;</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_artifact</span><span class="p">(</span><span class="s2">&quot;hm.png&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;hm.png&#39;</span><span class="p">)</span>
+
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">({</span><span class="s2">&quot;accuracy&quot;</span><span class="p">:</span> <span class="n">acc</span><span class="p">,</span><span class="s2">&quot;precision&quot;</span><span class="p">:</span> <span class="n">prec</span><span class="p">})</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;eta&quot;</span><span class="p">,</span> <span class="n">eta</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;colsample_bytree&quot;</span><span class="p">,</span> <span class="n">colsample</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;subsample&quot;</span><span class="p">,</span> <span class="n">subsample</span><span class="p">)</span>
+
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="n">XGB</span><span class="p">,</span> <span class="s2">&quot;XGB_model&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We start by defining our experiment name that will be “XGBOOST”</p>
+<p>After that the <em>mlflow.start_run()</em> allow us to execute a run every time with run our python script.</p>
+<section id="model-arguments">
+<h3>Model arguments<a class="headerlink" href="#model-arguments" title="Permalink to this headline"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">eta</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mf">0.3</span>
+<span class="n">colsample</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="mf">1.0</span>
+<span class="n">subsample</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="k">else</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+<p>This part of code allows us to parse argument when launching the python script.</p>
+<p>Those argument are parameters that will be used to define our model.</p>
+<ol class="arabic simple">
+<li><p>eta is the learning rate of the model</p></li>
+<li><p>colsample is the colsample_bytree parameters, it is the subsample ratio of columns when constructing each tree. Subsampling occurs once for every tree constructed</p></li>
+<li><p>subsample is the ratio of the training instances. Setting it to 0.5 means that XGBoost would randomly sample half of the training data prior to growing trees. and this will prevent overfitting. Subsampling will occur once in every boosting iteration.</p></li>
+</ol>
+<p>from : <a class="reference external" href="https://xgboost.readthedocs.io/en/stable/parameter.html">https://xgboost.readthedocs.io/en/stable/parameter.html</a></p>
+<p>Those parameters are the one we will tweek to try and have the best performances possible.</p>
+<p>They are kept in the MLFlow logs of our model by using :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;eta&quot;</span><span class="p">,</span> <span class="n">eta</span><span class="p">)</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;colsample_bytree&quot;</span><span class="p">,</span> <span class="n">colsample</span><span class="p">)</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;subsample&quot;</span><span class="p">,</span> <span class="n">subsample</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="model-metrics">
+<h3>Model metrics<a class="headerlink" href="#model-metrics" title="Permalink to this headline"></a></h3>
+<p>As we did before we use the accuracy, precision and confusion matrix to evaluate our models.</p>
+<p>They are computed and stored in the MLFlow logs of our model by using :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">XGB</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">y_pred</span><span class="p">)</span>
+<span class="n">prec</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="n">hm</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span><span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;hm.png&#39;</span><span class="p">)</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">log_artifact</span><span class="p">(</span><span class="s2">&quot;hm.png&quot;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;hm.png&#39;</span><span class="p">)</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">({</span><span class="s2">&quot;accuracy&quot;</span><span class="p">:</span> <span class="n">acc</span><span class="p">,</span><span class="s2">&quot;precision&quot;</span><span class="p">:</span> <span class="n">prec</span><span class="p">})</span>
+</pre></div>
+</div>
+<p><em>The confusion matrix is stored as .png by MLFlow that treats it as an artifact</em></p>
+</section>
+<section id="model-storing">
+<h3>Model storing<a class="headerlink" href="#model-storing" title="Permalink to this headline"></a></h3>
+<p>The model is also stored as a MLFlow artifact thanks to the command :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="n">XGB</span><span class="p">,</span> <span class="s2">&quot;XGB_model&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The model is stored as a .pkl file with a conda.yaml file and a requirements.txt file used to define the required environnement to use the model.</p>
+<p>This will allow us to reuse the model we trained with MLFlow for the prediction part.</p>
+</section>
+</section>
+<section id="mlflow-ui">
+<h2>MLFlow UI<a class="headerlink" href="#mlflow-ui" title="Permalink to this headline"></a></h2>
+<p>By running MLFlow ui from our base folder, it creates a folder named <strong>mlruns</strong> that contains our experiments run with all the information about the model.</p>
+<p><em>The experiment id is 1 because the 0 is the default experiment that is always created when running mlflow ui</em></p>
+<figure class="align-center">
+<img alt="_images/exp.png" src="_images/exp.png" />
+</figure>
+<p><br></p>
+<figure class="align-center">
+<img alt="_images/runs.png" src="_images/runs.png" />
+</figure>
+<p><br></p>
+<figure class="align-center">
+<img alt="_images/run-ex.png" src="_images/run-ex.png" />
+</figure>
+<p><br></p>
+<p>When MLFlow ui is running, we can access our runs in real time through a local web ui :</p>
+<figure class="align-center">
+<img alt="_images/ui.png" src="_images/ui.png" />
+</figure>
+<p>Each run we made is accessible and we can take a look at our logs.</p>
+<figure class="align-center">
+<img alt="_images/ui.png" src="_images/ui.png" />
+</figure>
+<p><br></p>
+<figure class="align-center">
+<img alt="_images/ui-run.png" src="_images/ui-run.png" />
+</figure>
+<p><br></p>
+<figure class="align-center">
+<img alt="_images/artifact1.png" src="_images/artifact1.png" />
+</figure>
+<p><br></p>
+<figure class="align-center">
+<img alt="_images/artifact2.png" src="_images/artifact2.png" />
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="models.html" class="btn btn-neutral float-left" title="Models building and training" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model-predict.html" class="btn btn-neutral float-right" title="Predictions using our models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

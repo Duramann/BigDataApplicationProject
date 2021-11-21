@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Big Data Application Project documentation! &mdash; BigDataApplicationProject 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dataset informations" href="dataset-informations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> BigDataApplicationProject
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="dataset-informations.html">Dataset informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="organization.html">Project organization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-exploration.html">Data exploration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-processing.html">Data processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models building and training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mlflow-xgb.html">XGBoost Model Training with MLFLOW</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-predict.html">Predictions using our models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shap.html">Model explaination using SHAP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Commands</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">BigDataApplicationProject</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li>Big Data Application Project documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>This is the project for the course named “Application of big data” by Alexandre NOUAR &amp; Théo DURA</p>
+<p>The environnement properties with all the dependencies needed for this project is stored in the conda.yml file.</p>
+<section id="big-data-application-project-documentation">
+<h1>Big Data Application Project documentation!<a class="headerlink" href="#big-data-application-project-documentation" title="Permalink to this headline"></a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dataset-informations.html">Dataset informations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dataset-informations.html#files">Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset-informations.html#importing-the-files">Importing the files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="organization.html">Project organization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-exploration.html">Data exploration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data-exploration.html#target-feature-analysis">Target feature analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-exploration.html#missing-values-overview">Missing values overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-exploration.html#unique-values-overview">Unique values overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-exploration.html#correlations">Correlations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data-processing.html">Data processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data-processing.html#data-cleaning">Data cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-processing.html#feature-engineering">Feature engineering</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models building and training</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models.html#xgboost-model">XGBOOST Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#random-forest-classifier">Random Forest Classifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#gradient-boosting-model">Gradient Boosting Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mlflow-xgb.html">XGBoost Model Training with MLFLOW</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mlflow-xgb.html#code">Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mlflow-xgb.html#model-arguments">Model arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mlflow-xgb.html#model-metrics">Model metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mlflow-xgb.html#model-storing">Model storing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow-xgb.html#mlflow-ui">MLFlow UI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model-predict.html">Predictions using our models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shap.html">Model explaination using SHAP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#process-the-data">Process the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#models">Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#basic-model-training">Basic model training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#training-with-mlflow">Training with MLFlow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#mlflow-ui">MLFlow ui</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#model-predictions">Model predictions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="dataset-informations.html" class="btn btn-neutral float-right" title="Dataset informations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Models building and training &mdash; BigDataApplicationProject 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="XGBoost Model Training with MLFLOW" href="mlflow-xgb.html" />
+    <link rel="prev" title="Data processing" href="data-processing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> BigDataApplicationProject
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dataset-informations.html">Dataset informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="organization.html">Project organization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-exploration.html">Data exploration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-processing.html">Data processing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Models building and training</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#xgboost-model">XGBOOST Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#random-forest-classifier">Random Forest Classifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gradient-boosting-model">Gradient Boosting Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mlflow-xgb.html">XGBoost Model Training with MLFLOW</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-predict.html">Predictions using our models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shap.html">Model explaination using SHAP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Commands</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BigDataApplicationProject</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Models building and training</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/models.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="models-building-and-training">
+<h1>Models building and training<a class="headerlink" href="#models-building-and-training" title="Permalink to this headline"></a></h1>
+<p>The models building and training has been tried on a notebook found at:</p>
+<p><strong>/notebooks/3.0-ANTD-Models.ipynb</strong></p>
+<p>It was then implemented in scripts found at:</p>
+<p><strong>/src/models/</strong></p>
+<p>To know how to execute the scripts related to models, see <a class="reference internal" href="commands.html#models-execution"><span class="std std-ref">Commands</span></a>.</p>
+<p>We used pickle to store our model as .pkl files, they can be found at:</p>
+<p><strong>/models</strong></p>
+<p>The first model we trained were basic models, we got more in depth with the XGBOOST model later on using MLFlow.</p>
+<p>We started by splitting the processed training dataset into training and testing sets using <em>sklearn.model_selection.train_test_split</em>.</p>
+<p>For the basic models, we will not explain every line of code as it is basic machine learning code defining the model, training it with .fit() and storing it using pickle.</p>
+<p>For each models, we decided to take a look at the accuracy, precision and confusion matrix.</p>
+<p><em>We decided to focus on the precision since we are trying to see if a person will be able to repay a loan or not</em></p>
+<section id="xgboost-model">
+<h2>XGBOOST Model<a class="headerlink" href="#xgboost-model" title="Permalink to this headline"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBClassifier</span>
+
+<span class="c1">## Building :</span>
+<span class="n">XGB</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="n">objective</span><span class="o">=</span><span class="s1">&#39;binary:logistic&#39;</span><span class="p">,</span> <span class="n">eval_metric</span><span class="o">=</span><span class="s2">&quot;logloss&quot;</span><span class="p">,</span> <span class="n">use_label_encoder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">subsample</span><span class="o">=</span><span class="mi">1</span>
+                           <span class="p">,</span> <span class="n">colsample_bytree</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1">## Training :</span>
+<span class="n">XGB</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1">## Model storing</span>
+<span class="n">filenameXGB</span> <span class="o">=</span> <span class="s1">&#39;models/base_XGB_model.pkl&#39;</span>
+<span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">XGB</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">filenameXGB</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><em>The objective parameter is set to binary:logistic because we are trying to predict binary features</em></p>
+<p><em>Logloss is the eval metrics used when predicting binary features</em></p>
+<p><em>Label encoder is set to false because we don’t need to do it as we already did feature engineering</em></p>
+<p><em>The next three values are parameters that will be detailed at</em> <a class="reference internal" href="mlflow-xgb.html#mlflow-xgboost"><span class="std std-ref">XGBoost with MLFlow</span></a>.</p>
+<p>The model is store at: <strong>/models/base_XGB_model.pkl</strong></p>
+<p>Here are its results:</p>
+<figure class="align-center">
+<img alt="_images/xgb_met.png" src="_images/xgb_met.png" />
+</figure>
+<figure class="align-center">
+<img alt="_images/xgb_cm.png" src="_images/xgb_cm.png" />
+</figure>
+<p>To see our advanced XGB model trained with MLFlow, see <a class="reference internal" href="mlflow-xgb.html#mlflow-xgboost"><span class="std std-ref">XGBoost with MLFlow</span></a>.</p>
+</section>
+<section id="random-forest-classifier">
+<h2>Random Forest Classifier<a class="headerlink" href="#random-forest-classifier" title="Permalink to this headline"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+
+<span class="c1">## Building</span>
+<span class="n">RFC</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="c1">## Training</span>
+<span class="n">RFC</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1">## Model storing</span>
+<span class="n">filenameRFC</span> <span class="o">=</span> <span class="s1">&#39;models/RFC_model.pkl&#39;</span>
+<span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">RFC</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">filenameRFC</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The model is store at: <strong>/models/RFC_model.pkl</strong></p>
+<p>Here are its results:</p>
+<figure class="align-center">
+<img alt="_images/rfc_met.png" src="_images/rfc_met.png" />
+</figure>
+<figure class="align-center">
+<img alt="_images/rfc_cm.png" src="_images/rfc_cm.png" />
+</figure>
+<p><em>We couldn’t figure why we had a precision of 1 which is very unlickely to be real</em></p>
+</section>
+<section id="gradient-boosting-model">
+<h2>Gradient Boosting Model<a class="headerlink" href="#gradient-boosting-model" title="Permalink to this headline"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingClassifier</span>
+
+<span class="c1">## Building</span>
+<span class="n">GBC</span> <span class="o">=</span> <span class="n">GradientBoostingClassifier</span><span class="p">()</span>
+
+<span class="c1">## Training</span>
+<span class="n">GBC</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1">## Model storing</span>
+<span class="n">filenameGBC</span> <span class="o">=</span> <span class="s1">&#39;models/GBC_model.pkl&#39;</span>
+<span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">GBC</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">filenameGBC</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The model is store at: <strong>/models/GBC_model.pkl</strong></p>
+<p>Here are its results:</p>
+<figure class="align-center">
+<img alt="_images/gbc_met.png" src="_images/gbc_met.png" />
+</figure>
+<figure class="align-center">
+<img alt="_images/gbc_cm.png" src="_images/gbc_cm.png" />
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="data-processing.html" class="btn btn-neutral float-left" title="Data processing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mlflow-xgb.html" class="btn btn-neutral float-right" title="XGBoost Model Training with MLFLOW" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
