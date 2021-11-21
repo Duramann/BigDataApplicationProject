@@ -39,7 +39,7 @@ pickle.dump(XGB, open(filenameXGB, 'wb'))
 from sklearn.ensemble import RandomForestClassifier
 
 ## Building
-RFC = RandomForestClassifier(n_estimators=200)
+RFC = RandomForestClassifier()
 
 ## Training
 RFC.fit(X_train, y_train)
